@@ -1,0 +1,32 @@
+{
+    "type": "APL",
+    "version": "1.9",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.5.0"
+        }
+    ],
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "height": "100%",
+                "width": "100%",
+                "alignItems": "center",
+                "items": [
+                    {
+                        "autoplay": true,
+                        "source": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4",
+                        "type": "Video",
+                        "width": "100%",
+                        "height": "80%"
+                    }
+                ]
+            }
+        ]
+    }
+}
