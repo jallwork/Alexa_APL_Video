@@ -1,0 +1,127 @@
+{
+    "type": "APL",
+    "version": "1.9",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.5.0"
+        }
+    ],
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "alignItems": "center",
+                "items": [
+                    {
+                        "source": "${payload.track.url}",
+                        "autoplay": true,
+                        "type": "Video",
+                        "width": "100%",
+                        "height": "80%",
+                        "shrink": 1,
+                        "id": "videoPlayerId",
+                        "onPause": [
+                            {
+                                "type": "SetValue",
+                                "componentId": "playPauseToggleButtonId",
+                                "property": "checked",
+                                "value": false
+                            }
+                        ],
+                        "onPlay": [
+                            {
+                                "type": "SetValue",
+                                "componentId": "playPauseToggleButtonId",
+                                "property": "checked",
+                                "value": true
+                            },
+                            {
+                                "type": "SetValue",
+                                "property": "videoTotalValue",
+                                "value": "${event.duration}"
+                            }
+                        ],
+                        "onTrackUpdate": [
+                            {
+                                "type": "SetValue",
+                                "property": "videoTotalValue",
+                                "value": "${event.duration}"
+                            },
+                            {
+                                "type": "SetValue",
+                                "property": "videoProgressValue",
+                                "value": 0
+                            }
+                        ],
+                        "onTimeUpdate": [
+                            {
+                                "type": "SetValue",
+                                "property": "videoProgressValue",
+                                "value": "${event.currentTime}"
+                            },
+                            {
+                                "type": "SetValue",
+                                "componentId": "slider",
+                                "property": "progressValue",
+                                "value": "${videoProgressValue}"
+                            },
+                            {
+                                "type": "SetValue",
+                                "property": "videoTotalValue",
+                                "value": "${event.duration}"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "AlexaTransportControls",
+                        "justifyContent": "center",
+                        "mediaComponentId": "videoPlayerId",
+                        "playPauseToggleButtonId": "playPauseToggleButtonId"
+                    },
+                    {
+                        "type": "AlexaSlider",
+                        "sliderId": "slider",
+                        "progressValue": "${videoProgressValue}",
+                        "totalValue": "${videoTotalValue}",
+                        "positionPropertyName": "sliderThumbPosition",
+                        "metadataDisplayed": true,
+                        "metadataPosition": "above_right",
+                        "width": "75%",
+                        "paddingBottom": "90dp",
+                        "onUpCommand": [
+                            {
+                                "type": "ControlMedia",
+                                "componentId": "videoPlayerId",
+                                "command": "seek",
+                                "value": "${sliderThumbPosition - videoProgressValue}"
+                            }
+                        ]
+                    }
+                ],
+                "justifyContent": "center",
+                "type": "Container",
+                "bind": [
+                    {
+                        "name": "sliderThumbPosition",
+                        "value": 0
+                    },
+                    {
+                        "name": "videoProgressValue",
+                        "type": "number",
+                        "value": 0
+                    },
+                    {
+                        "name": "videoTotalValue",
+                        "type": "number",
+                        "value": 0
+                    }
+                ],
+                "width": "100%",
+                "height": "100%"
+            }
+        ]
+    }
+}
