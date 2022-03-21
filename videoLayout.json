@@ -1,0 +1,44 @@
+{
+    "type": "APL",
+    "version": "1.9",
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.5.0"
+        }
+    ],
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "height": "100%",
+                "width": "100%",
+                "paddingTop": "16dp",
+                "paddingLeft": "16dp",
+                "paddingRight": "16dp",
+                "paddingBottom": "16dp",
+                "items": [
+                    {
+                        "type": "Video",
+                        "height": "80%",
+                        "width": "100%",
+                        "autoplay": true,
+                        "id": "videoPlayerId",
+                        "source" : "${payload.track.url}"
+                    },
+                    {
+                        "type": "AlexaTransportControls",
+                        "justifyContent": "center",
+                        "mediaComponentId": "videoPlayerId",
+                        "playPauseToggleButtonId": "playPauseToggleButtonId",
+                        "autoplay": true
+                    }
+                ]
+            }
+        ]
+    }
+}
